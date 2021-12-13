@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Offer Form</title>
+</head>
+<body>
+<h1>Nasıl Yardım edebilirsiniz?</h1>
+<form method="POST">
+    <table>
+        {{ form }}
+
+    </table>
+    {% csrf_token %}
+    <button type="submit">Create Offer</button>
+
+</form>
+
+</body>
+</html></html>
