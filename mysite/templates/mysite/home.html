@@ -4,7 +4,25 @@
     <meta charset="UTF-8">
     <title>Welcome</title>
 </head>
+<div class="container py-5">
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+</div>
+
 <body>
-<h1>Welcome to TimeSharing Platform</h1>
+<h1>Zamanını Paylaş</h1>
+
+
+<br>
+<a href="{% url "login" %}">Üye Girişi</a>
+<br>
+<a href="{% url "register" %}">Sisteme Kaydol</a>
+<br>
+<a href="{% url "categories_list" %}">Servis Kategorilerine Göz At</a>
+<br>
+
 </body>
 </html>
