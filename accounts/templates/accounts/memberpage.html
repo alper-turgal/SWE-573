@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<div class="container py-5">
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+</div>
+
+<body>
+<h1>Üye Sayfasına Hoş Geldiniz</h1>
+
+<br>
+<a href="{% url "categories_list" %}">Servis Kategorilerine Göz At</a>
+<br>
+<a href="{% url "offers_list" %}">Tekliflere Göz At</a>
+<br>
+<a href="{% url "offers_form" %}">Teklif Oluştur</a>
+<br>
+<a href="{% url "logout" %}">Çıkış Yap</a>
+
+</body>
+</html>
