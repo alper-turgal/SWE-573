@@ -14,7 +14,7 @@ def give_services_offer_form(request):
         form = ServiceOfferForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("homepage")
+            return redirect("members")
         else:
             form = ServiceOfferForm()
     form = ServiceOfferForm()
