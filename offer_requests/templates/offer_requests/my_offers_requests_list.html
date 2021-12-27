@@ -1,0 +1,19 @@
+{% extends "users/base.html" %}
+{% block title %} Register Page {% endblock title %}
+{% block content %}
+    <h3>Kimler İlgilenmiş:</h3>
+
+    <ul>
+        {% for request in requests %}
+            <li>
+
+                <a href="{% url "request_detail" request.id %}">{{ request.request_creator.username }}</a>
+
+            </li>
+        {% endfor %}
+
+    </ul>
+
+
+
+{% endblock content %}

@@ -1,0 +1,19 @@
+{% extends "users/base.html" %}
+{% block title %} Register Page {% endblock title %}
+{% load bootstrap_icons %}
+{% block content %}
+    <h3>Tekliflerim</h3>
+
+    <ul>
+        {% for offer in my_offers_list %}
+            <li>
+                <a href="{% url "my_offers_detail" offer.id %}">{{ offer }}</a>
+                {% bs_icon 'check-circle-fill' %}
+
+
+            </li>
+        {% endfor %}
+
+    </ul>
+
+{% endblock content %}

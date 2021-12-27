@@ -1,0 +1,24 @@
+{% extends "users/base.html" %}
+{% block title %} Teklifler {% endblock title %}
+{% block content %}
+    <h1>Mevcut Teklifler</h1>
+
+    <ul>
+
+        {% for offer in offers_list %}
+            {% if offer.offer_creator_id != in_user.id %}
+                <li>
+                    <a href="{% url "all_offers_detail" offer.id %}">{{ offer }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+    </ul>
+
+    {{ in_user.id }}
+
+
+
+
+
+{% endblock content %}

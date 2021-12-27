@@ -1,0 +1,33 @@
+{% extends "users/base.html" %}
+{% block title %} Tekliflerim {% endblock title %}
+{% block content %}
+    <h3>Teklif Detayı</h3>
+
+
+
+    <ul class="list-group">
+        {% for offer in my_offer %}
+            <li class="list-group-item"><b>Başlık:</b> {{ offer.service_title }}</li>
+            <li class="list-group-item"><b>Kategori:</b> {{ offer.service_category }}</li>
+            <li class="list-group-item"><b>Alt Kategori:</b> {{ offer.service_subcategory }}</li>
+            <li class="list-group-item"><b>İsim:</b> {{ offer.service_name }}</li>
+            <li class="list-group-item"><b>Tanım:</b> {{ offer.service_description }}</li>
+            <li class="list-group-item"><b>Tarih:</b> {{ offer.service_date }}</li>
+            <li class="list-group-item"><b>Süre:</b> {{ offer.service_duration }} saat</li>
+            <li class="list-group-item"><b>Şehir:</b> {{ offer.service_city }}</li>
+            <li class="list-group-item"><b>İlçe:</b> {{ offer.service_district }}</li>
+        {% endfor %}
+    </ul>
+    <br>
+    {% for offer in my_offer %}
+        <a class="btn btn-primary btn-lg" href="{% url "offers_form_edit" offer.id %}" role="button">Değişiklik
+            Yap</a>
+        <a class="btn btn-secondary btn-lg" href="{% url "request_list" offer.id %}" role="button">Talepleri Gör</a>
+        <a class="btn btn-danger btn-lg" href="{% url "offers_form_delete" offer.id %}" role="button">Sil</a>
+
+    {% endfor %}
+
+
+
+{% endblock content %}
+

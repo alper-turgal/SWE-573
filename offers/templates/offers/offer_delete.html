@@ -1,0 +1,12 @@
+{% extends "users/base.html" %}
+{% block title %} Teklif Silme {% endblock title %}
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <h3>Kaydı silmek istiyor musunuz?</h3>
+        <button type="submit" class="btn btn-danger btn-sm">Evet</button>
+        <a class="btn btn-primary btn-sm" href="../" role="button">İptal</a>
+    </form>
+
+{% endblock content %}
+
