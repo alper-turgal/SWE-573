@@ -42,6 +42,8 @@ def request_offer(request, id):
             if credits_existing >= credits_needed:
                 profile.credits = profile.credits - credits_needed
                 profile.save(update_fields=['credits'])
+                req_offer.request_count += 1
+                req_offer.save(update_fields=['request_count'])
                 post = form.save(commit=False)
                 post.offer_creator_id = offer_creator_id_in_req
                 post.save()
@@ -99,8 +101,10 @@ def delete_offer(request, id):
 
 @login_required
 def list_my_offers(request):
+    my_offers = ServiceOffer.objects.all().filter(offer_creator_id=request.user.id)
+    requests_query = OfferRequests.objects.all().filter(offer_creator_id=request.user.id)
     return render(request, "offers/my_offers_list.html",
-                  {"my_offers_list": ServiceOffer.objects.all().filter(offer_creator_id=request.user.id)})
+                  {"my_offers_list": my_offers, "requests": requests_query})
 
 
 @login_required

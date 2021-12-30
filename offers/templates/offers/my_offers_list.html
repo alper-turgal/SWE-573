@@ -1,19 +1,51 @@
 {% extends "users/base.html" %}
 {% block title %} Register Page {% endblock title %}
-{% load bootstrap_icons %}
+
 {% block content %}
-    <h3>Tekliflerim</h3>
+    <br>
+    <h4>Teklif Yönetimi</h4>
 
-    <ul>
+
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Tekliflerim</th>
+            <th scope="col">İlgilenenler</th>
+            <th scope="col">Onayladıklarım</th>
+        </tr>
+        </thead>
+        <tbody>
         {% for offer in my_offers_list %}
-            <li>
-                <a href="{% url "my_offers_detail" offer.id %}">{{ offer }}</a>
-                {% bs_icon 'check-circle-fill' %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td><a href="{% url "my_offers_detail" offer.id %}">{{ offer }}</a></td>
+                {% if offer.request_count == 0 %}
+                    <td> Henüz ilgilenen yok!</td>
+                {% else %}
+                    <td><a href="{% url "request_list" offer.id %}">{{ offer.request_count }} Üye</a></td>
+                {% endif %}
 
+                {% for request in requests %}
+                    {% if request.related_offer_id == offer.id and request.status == 2 %}
 
-            </li>
+                        <td>
+                            <a href="{% url 'gen_profile' request.request_creator.id %}">{{ request.request_creator.username }}</a>
+                        </td>
+
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
         {% endfor %}
 
-    </ul>
+        </tbody>
+    </table>
+
+
+
+
 
 {% endblock content %}

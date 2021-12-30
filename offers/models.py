@@ -19,6 +19,7 @@ class ServiceOffer(models.Model):
     service_city = models.CharField(max_length=200, verbose_name="Your City")
     service_district = models.CharField(max_length=200, verbose_name="Your District")
     timestamp = models.DateTimeField(auto_now_add=True)
+    request_count = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.service_name} on {self.service_date}"

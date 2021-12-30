@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from users.models import Profile
 from .forms import OfferRequestAnswerForm
+from django.contrib import messages
 
 
 # Create your views here.
@@ -12,7 +13,8 @@ from .forms import OfferRequestAnswerForm
 
 @login_required
 def list_my_offers_requests(request, id):
-    requests_query = OfferRequests.objects.all().filter(related_offer_id=id, status=1)
+    requests_query = OfferRequests.objects.all().filter(related_offer_id=id)
+
     return render(request, "offer_requests/my_offers_requests_list.html",
                   {"requests": requests_query})
 
@@ -20,16 +22,20 @@ def list_my_offers_requests(request, id):
 @login_required
 def accept_my_offers_requests(request, id):
     request_obj = get_object_or_404(OfferRequests, id=id)
-    status = 2
+    status = 2  # confirmed request
     user = get_object_or_404(User, id=request_obj.request_creator_id)
     profile = get_object_or_404(Profile, user_id=request_obj.request_creator_id)
     if request.method == "POST":
         form = OfferRequestAnswerForm(request.POST, instance=request_obj)
         if form.is_valid():
-            response_form = form.save(commit=False)
-            response_form.status = status
-            response_form.save()
-            return redirect("my_offers_list")
+            if request_obj.status == 1:
+                response_form = form.save(commit=False)
+                response_form.status = status
+                response_form.save()
+                return redirect("my_offers_list")
+            else:
+                messages.error(request, "Bu teklif için kabul ettiğiniz bir talep var!")
+                return redirect("my_offers_list")
     else:
         form = OfferRequestAnswerForm()
     return render(request, "offer_requests/my_offers_requests_detail.html",

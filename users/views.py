@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from users.models import Profile
 
 from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
 
@@ -95,3 +97,8 @@ def profile(request):
         profile_form = UpdateProfileForm(instance=request.user.profile)
 
     return render(request, 'users/profile.html', {'user_form': user_form, 'profile_form': profile_form})
+
+
+def show_profile(request, id):
+    gen_user = get_object_or_404(Profile, user_id=id)
+    return render(request, 'users/gen_profile.html', {'gen_user': gen_user})
