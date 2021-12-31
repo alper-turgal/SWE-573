@@ -10,4 +10,4 @@ class OfferRequests(models.Model):
     offer_creator_id = models.IntegerField()
     message = models.TextField(default="Teklifinizle ilgileniyorum, teşekkürler..")
     response_message = models.TextField(default="Kabul ettiğiniz için teşekkürler, görüşmek üzere..")
-    status = models.IntegerField(default=1)
+    status = models.IntegerField(default=2)

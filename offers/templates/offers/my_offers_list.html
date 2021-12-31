@@ -12,6 +12,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Tekliflerim</th>
+            <th scope="col">Teklif Durumu</th>
             <th scope="col">İlgilenenler</th>
             <th scope="col">Onayladıklarım</th>
         </tr>
@@ -21,6 +22,17 @@
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
                 <td><a href="{% url "my_offers_detail" offer.id %}">{{ offer }}</a></td>
+
+                {% if offer.status == 1 %}
+                    <td>Teklifiniz bekliyor</td>
+                {% elif offer.status == 2 %}
+                    <td>Teklifinize talep var</td>
+                {% elif offer.status == 3 %}
+                    <td>Talebi onayladınız</td>
+                {% endif %}
+
+
+
                 {% if offer.request_count == 0 %}
                     <td> Henüz ilgilenen yok!</td>
                 {% else %}
@@ -28,7 +40,7 @@
                 {% endif %}
 
                 {% for request in requests %}
-                    {% if request.related_offer_id == offer.id and request.status == 2 %}
+                    {% if request.related_offer_id == offer.id and request.status == 3 %}
 
                         <td>
                             <a href="{% url 'gen_profile' request.request_creator.id %}">{{ request.request_creator.username }}</a>

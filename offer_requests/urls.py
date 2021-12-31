@@ -5,4 +5,5 @@ urlpatterns = [
 
     path("reqlist/<int:id>", views.list_my_offers_requests, name="request_list"),
     path("reqlistdet/<int:id>", views.accept_my_offers_requests, name="request_detail"),
+    path("reqman/", views.list_my_requests, name="req_man"),
 ]

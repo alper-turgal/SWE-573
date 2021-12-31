@@ -1,0 +1,38 @@
+{% extends "users/base.html" %}
+{% block title %} Register Page {% endblock title %}
+
+{% block content %}
+    <br>
+    <h4>Talep Yönetimi</h4>
+
+
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Taleplerim</th>
+            <th scope="col">Talep Durumu</th>
+            <th scope="col">İlgilenenler</th>
+            <th scope="col">Onayladıklarım</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for request in requests %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ request.related_offer }}</td>
+                <td>X</td>
+                <td>Y</td>
+                <td>Z</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+
+
+
+
+{% endblock content %}

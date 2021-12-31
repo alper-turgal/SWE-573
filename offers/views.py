@@ -43,7 +43,8 @@ def request_offer(request, id):
                 profile.credits = profile.credits - credits_needed
                 profile.save(update_fields=['credits'])
                 req_offer.request_count += 1
-                req_offer.save(update_fields=['request_count'])
+                req_offer.status = 2  # received demand
+                req_offer.save(update_fields=['request_count', 'status'])
                 post = form.save(commit=False)
                 post.offer_creator_id = offer_creator_id_in_req
                 post.save()
