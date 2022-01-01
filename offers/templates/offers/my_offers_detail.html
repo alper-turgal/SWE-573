@@ -23,6 +23,7 @@
         <a class="btn btn-primary btn-lg" href="{% url "offers_form_edit" offer.id %}" role="button">Değişiklik
             Yap</a>
         <a class="btn btn-secondary btn-lg" href="{% url "request_list" offer.id %}" role="button">Talepleri Gör</a>
+        <a class="btn btn-secondary btn-lg" href="{% url "offer_finalize" offer.id %}" role="button">Tamamlandı</a>
         <a class="btn btn-danger btn-lg" href="{% url "offers_form_delete" offer.id %}" role="button">Sil</a>
 
     {% endfor %}

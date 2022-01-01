@@ -11,5 +11,6 @@ urlpatterns = [
     path("<int:id>/edit", views.edit_services_offer_form, name="offers_form_edit"),
     path("<int:id>/delete", views.delete_offer, name="offers_form_delete"),
     path("<int:id>/request", views.request_offer, name="offer_request"),
+    path("<int:id>/finalize", views.finalize_service, name="offer_finalize"),
 
 ]

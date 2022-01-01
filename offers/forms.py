@@ -53,3 +53,12 @@ class OfferRequestForm(ModelForm):
             "message": forms.Textarea(
                 attrs={'class': 'form-control', 'rows': 3, "placeholder": "mesajınızı yazın"})
         }
+
+
+class ServiceOfferFinalForm(ModelForm):
+    class Meta:
+        model = ServiceOffer
+        fields = ('service_duration',)
+        widgets = {
+            "service_duration": TextInput(attrs={"type": "number", "min": "1", "max": "3"})
+        }

@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect
 from .models import ServiceOffer
-from .forms import ServiceOfferForm, ServiceOfferEditForm
+from .forms import ServiceOfferForm, ServiceOfferEditForm, ServiceOfferFinalForm, OfferRequestForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from users.models import Profile
 from offer_requests.models import OfferRequests
-from .forms import OfferRequestForm
 from django.contrib import messages
 
 
@@ -112,3 +111,25 @@ def list_my_offers(request):
 def detail_my_offers(request, id):
     my_offer = ServiceOffer.objects.all().filter(id=id)
     return render(request, "offers/my_offers_detail.html", {"my_offer": my_offer})
+
+
+@login_required
+def finalize_service(request, id):
+    offer = get_object_or_404(ServiceOffer, id=id)
+    request_obj = get_object_or_404(OfferRequests, related_offer_id=id)
+    if request.method == "POST":
+        form = ServiceOfferFinalForm(request.POST, instance=offer)
+        if form.is_valid():
+            if offer.status == 3:
+                offer_status = 4  # service provider confirmed
+                final_form = form.save(commit=False)
+                final_form.status = offer_status
+                final_form.save()
+                request_obj.status = offer_status
+                request_obj.save(update_fields=['status'])
+                return redirect("users-home")
+            else:
+                messages.error(request, "Bu teklif için henüz onayladığınız bir talep yok!")
+                return redirect("my_offers_list")
+    form = ServiceOfferFinalForm()
+    return render(request, "offers/offer_final_form.html", {"form": form})

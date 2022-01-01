@@ -29,6 +29,9 @@
                     <td>Teklifinize talep var</td>
                 {% elif offer.status == 3 %}
                     <td>Talebi onayladınız</td>
+                {% elif offer.status == 4 %}
+                    <td>Servisi Verdiniz</td>
+
                 {% endif %}
 
 
@@ -40,7 +43,7 @@
                 {% endif %}
 
                 {% for request in requests %}
-                    {% if request.related_offer_id == offer.id and request.status == 3 %}
+                    {% if request.related_offer_id == offer.id and request.status > 2 %}
 
                         <td>
                             <a href="{% url 'gen_profile' request.request_creator.id %}">{{ request.request_creator.username }}</a>
