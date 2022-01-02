@@ -20,9 +20,11 @@
         <tbody>
         {% for offer in my_offers_list %}
             <tr>
+                <!--1. column -->
                 <th scope="row">{{ forloop.counter }}</th>
+                <!--2. column -->
                 <td><a href="{% url "my_offers_detail" offer.id %}">{{ offer }}</a></td>
-
+                <!--3. column -->
                 {% if offer.status == 1 %}
                     <td>Teklifiniz bekliyor</td>
                 {% elif offer.status == 2 %}
@@ -31,28 +33,29 @@
                     <td>Talebi onayladınız</td>
                 {% elif offer.status == 4 %}
                     <td>Servisi Verdiniz</td>
-
+                {% elif offer.status == 5 %}
+                    <td>Tamamlandı</td>
                 {% endif %}
-
-
-
+                <!--4. column: -->
                 {% if offer.request_count == 0 %}
                     <td> Henüz ilgilenen yok!</td>
                 {% else %}
                     <td><a href="{% url "request_list" offer.id %}">{{ offer.request_count }} Üye</a></td>
                 {% endif %}
+                <!--5. column: Onayladıklarım -->
+                {% if offer.status > 2 %}
+                    {% for request in offer.requests.all %}
+                        {% if request.status > 2 %}
+                            <td>
+                                <a href="{% url 'gen_profile' request.request_creator.id %}">{{ request.request_creator.username }}</a>
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <td>-</td>
+                {% endif %}
 
-                {% for request in requests %}
-                    {% if request.related_offer_id == offer.id and request.status > 2 %}
 
-                        <td>
-                            <a href="{% url 'gen_profile' request.request_creator.id %}">{{ request.request_creator.username }}</a>
-                        </td>
-
-                    {% else %}
-                        <td>-</td>
-                    {% endif %}
-                {% endfor %}
             </tr>
         {% endfor %}
 

@@ -19,17 +19,20 @@ def list_all_offers(request):
 
 @login_required
 def detail_all_offers(request, id):
-    any_offer = ServiceOffer.objects.all().filter(id=id)
-    for e in any_offer:
-        creator_id = e.offer_creator_id
-        creator = User.objects.all().filter(id=creator_id)
-        return render(request, "offers/all_offers_detail.html", {"any_offer": any_offer, "creator": creator})
+    any_offer = get_object_or_404(ServiceOffer, id=id)
+    my_recurring_requests = OfferRequests.objects.filter(request_creator=request.user, related_offer_id=id)
+
+    return render(request, "offers/all_offers_detail.html", {"offer": any_offer, "check": my_recurring_requests})
 
 
 # Cannot assign "6": "OfferRequests.request_creator" must be a "User" instance.
 @login_required
 def request_offer(request, id):
     req_offer = get_object_or_404(ServiceOffer, id=id)
+    my_recurring_requests = OfferRequests.objects.filter(request_creator=request.user, related_offer_id=id)
+    if my_recurring_requests.exists():
+        messages.error(request, "Bu teklife daha önce talep göndermiştiniz!")
+        return redirect("users-home")
     if request.method == "POST":
         requester = OfferRequests(request_creator=request.user, related_offer_id=id)
         form = OfferRequestForm(request.POST, instance=requester)
@@ -102,9 +105,11 @@ def delete_offer(request, id):
 @login_required
 def list_my_offers(request):
     my_offers = ServiceOffer.objects.all().filter(offer_creator_id=request.user.id)
-    requests_query = OfferRequests.objects.all().filter(offer_creator_id=request.user.id)
+    # for offer in my_offers:
+    # requests_query = OfferRequests.objects.all().filter(related_offer_id=offer.id)
+    # requests_query = OfferRequests(related_offer_id=my_offers.id)
     return render(request, "offers/my_offers_list.html",
-                  {"my_offers_list": my_offers, "requests": requests_query})
+                  {"my_offers_list": my_offers})
 
 
 @login_required
@@ -114,7 +119,7 @@ def detail_my_offers(request, id):
 
 
 @login_required
-def finalize_service(request, id):
+def finalize_service_as_provider(request, id):
     offer = get_object_or_404(ServiceOffer, id=id)
     request_obj = get_object_or_404(OfferRequests, related_offer_id=id)
     if request.method == "POST":

@@ -10,7 +10,7 @@ class ServiceOfferForm(ModelForm):
     class Meta:
         model = ServiceOffer
         fields = "__all__"
-        exclude = {"offer_creator", "request_count", "status", }
+        exclude = {"offer_creator", "request_count", "status", "service_rating", 'service_comment'}
         widgets = {
             "service_date": DateInput(attrs={"type": "date"}),
             "service_start_time": TimeInput(attrs={"type": "time"}),

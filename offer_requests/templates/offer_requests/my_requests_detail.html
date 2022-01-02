@@ -2,9 +2,6 @@
 {% block title %} Tekliflerim {% endblock title %}
 {% block content %}
     <h3>Teklif Detayı</h3>
-    {% if check %}
-        <h5>Bu teklife daha önce talep göndermiştiniz!</h5>
-    {% endif %}
 
 
 
@@ -22,8 +19,8 @@
         <li class="list-group-item"><b>İlçe:</b> {{ offer.service_district }}</li>
     </ul>
     <br>
-    {% if not check %}
-        <a class="btn btn-primary btn-lg" href="{% url "offer_request" offer.id %}" role="button">Talep Gönder</a>
+    {% if offer.status == 4 %}
+        <a class="btn btn-primary btn-lg" href="{% url "request_finalize" offer.id %}" role="button">Onayla</a>
     {% endif %}
 
 

@@ -21,6 +21,8 @@ class ServiceOffer(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(default=1)
     request_count = models.IntegerField(default=0)
+    service_rating = models.IntegerField(default=5)
+    service_comment = models.CharField(default="Yorum yazabilirsiniz..", max_length=200, verbose_name="Yorumunuz")
 
     def __str__(self):
         return f"{self.service_name} on {self.service_date}"
