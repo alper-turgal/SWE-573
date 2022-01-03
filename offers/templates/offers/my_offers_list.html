@@ -28,7 +28,7 @@
                 {% if offer.is_requested == False %}
                     <td>Teklifinize henüz talep yok.</td>
                 {% elif offer.is_requested == True and  offer.is_request_accepted == False %}
-                    <td>Onay bekleyen talepleriniz var.</td>
+                    <td>Onayınızı bekleyen talepler var.</td>
                 {% elif offer.is_request_accepted == True and offer.is_service_provider_finalized == False %}
                     <td>Onayladığınız bir talep var, tarihi unutmayın!</td>
                 {% elif offer.is_service_provider_finalized == True and offer.is_service_taker_finalized == False %}

@@ -44,7 +44,7 @@ def accept_my_offers_requests(request, id):
                 # response_form.save()
                 for any_request in requests_received:
                     requesters_profile = get_object_or_404(Profile, user_id=any_request.request_creator_id)
-                    if requesters_profile.user_id != request_obj.request_creator_id:
+                    if requesters_profile.user_id != request_obj.request_creator_id and any_request.is_cancelled == False:
                         requesters_profile.credits = requesters_profile.credits + credit_refund
                         requesters_profile.save(update_fields=["credits"])
                 # profile.credits = profile.credits - credit_refund
@@ -71,9 +71,10 @@ def list_my_requests(request):
 
 
 def detail_my_requests(request, id):
-    request_obj = get_object_or_404(ServiceOffer, id=id)
+    offer_obj = get_object_or_404(ServiceOffer, id=id)
+    my_request = get_object_or_404(OfferRequests, request_creator=request.user, related_offer_id=id)
     return render(request, "offer_requests/my_requests_detail.html",
-                  {"offer": request_obj})
+                  {"offer": offer_obj, "my_request": my_request})
 
 
 def finalize_service_as_taker(request, id):
@@ -109,3 +110,35 @@ def finalize_service_as_taker(request, id):
         form = FinalizeServiceAsTakerForm()
     return render(request, "offer_requests/request_final_form.html",
                   {"form": form})
+
+
+@login_required
+def cancel_my_request(request, id):
+    requested_offer = get_object_or_404(ServiceOffer, id=id)
+    my_request = get_object_or_404(OfferRequests, request_creator=request.user, related_offer_id=id)
+    my_profile = get_object_or_404(Profile, user_id=request.user.id)
+    all_requests = OfferRequests.objects.all().filter(related_offer_id=id)
+    if request.method == "POST":
+        my_profile.credits += requested_offer.service_duration
+        if requested_offer.request_count == 1:
+            requested_offer.is_requested = False
+        requested_offer.request_count -= 1
+        if my_request.id == requested_offer.accepted_request_id:
+            for other_request in all_requests:
+                profile = get_object_or_404(Profile, user_id=other_request.request_creator_id)
+                if profile.user_id != my_profile.user_id and other_request.is_cancelled == False:
+                    if profile.credits >= requested_offer.service_duration:
+                        profile.credits -= requested_offer.service_duration
+                        profile.save(update_fields=["credits"])
+                    else:
+                        other_request.is_cancelled = True
+                        other_request.save(update_fields=["is_cancelled"])
+            requested_offer.accepted_request_id = 0
+            requested_offer.is_request_accepted = False
+        my_request.is_cancelled = True
+        my_profile.save(update_fields=["credits"])
+        requested_offer.save(
+            update_fields=["request_count", "is_requested", "accepted_request_id", "is_request_accepted"])
+        my_request.save(update_fields=["is_cancelled"])
+        return redirect("req_man")
+    return render(request, "offer_requests/cancel_request.html")

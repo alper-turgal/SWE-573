@@ -6,9 +6,9 @@
     <ul>
         {% for request in requests %}
             <li>
-
-                <a href="{% url "request_detail" request.id %}">{{ request.request_creator.username }}</a>
-
+                {% if request.is_cancelled == False %}
+                    <a href="{% url "request_detail" request.id %}">{{ request.request_creator.username }}</a>
+                {% endif %}
             </li>
         {% endfor %}
 
