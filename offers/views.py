@@ -45,8 +45,10 @@ def request_offer(request, id):
                 profile.credits = profile.credits - credits_needed
                 profile.save(update_fields=['credits'])
                 req_offer.request_count += 1
-                req_offer.status = 2  # received demand
-                req_offer.save(update_fields=['request_count', 'status'])
+                # req_offer.status = 2  # received demand
+                req_offer.is_requested = True
+                # req_offer.save(update_fields=['request_count', 'status', "is_requested"])
+                req_offer.save(update_fields=['request_count', "is_requested"])
                 post = form.save(commit=False)
                 post.offer_creator_id = offer_creator_id_in_req
                 post.save()
@@ -105,33 +107,33 @@ def delete_offer(request, id):
 @login_required
 def list_my_offers(request):
     my_offers = ServiceOffer.objects.all().filter(offer_creator_id=request.user.id)
-    # for offer in my_offers:
-    # requests_query = OfferRequests.objects.all().filter(related_offer_id=offer.id)
-    # requests_query = OfferRequests(related_offer_id=my_offers.id)
     return render(request, "offers/my_offers_list.html",
                   {"my_offers_list": my_offers})
 
 
 @login_required
 def detail_my_offers(request, id):
-    my_offer = ServiceOffer.objects.all().filter(id=id)
-    return render(request, "offers/my_offers_detail.html", {"my_offer": my_offer})
+    # my_offer = ServiceOffer.objects.all().filter(id=id)
+    my_offer = get_object_or_404(ServiceOffer, id=id)
+    return render(request, "offers/my_offers_detail.html", {"offer": my_offer})
 
 
 @login_required
 def finalize_service_as_provider(request, id):
     offer = get_object_or_404(ServiceOffer, id=id)
-    request_obj = get_object_or_404(OfferRequests, related_offer_id=id)
+    # request_obj = get_object_or_404(OfferRequests, related_offer_id=id)
     if request.method == "POST":
         form = ServiceOfferFinalForm(request.POST, instance=offer)
         if form.is_valid():
-            if offer.status == 3:
-                offer_status = 4  # service provider confirmed
+            if offer.is_request_accepted == True:
+                # offer_status = 4  # service provider confirmed
+                # offer.is_service_provider_finalized = True
                 final_form = form.save(commit=False)
-                final_form.status = offer_status
+                # final_form.status = offer_status
+                final_form.is_service_provider_finalized = True
                 final_form.save()
-                request_obj.status = offer_status
-                request_obj.save(update_fields=['status'])
+                # request_obj.status = offer_status
+                # request_obj.save(update_fields=['status'])
                 return redirect("users-home")
             else:
                 messages.error(request, "Bu teklif için henüz onayladığınız bir talep yok!")

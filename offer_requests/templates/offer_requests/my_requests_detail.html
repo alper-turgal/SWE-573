@@ -15,11 +15,14 @@
         <li class="list-group-item"><b>Tanım:</b> {{ offer.service_description }}</li>
         <li class="list-group-item"><b>Tarih:</b> {{ offer.service_date }}</li>
         <li class="list-group-item"><b>Süre:</b> {{ offer.service_duration }} saat</li>
+        {% if offer.service_duration != offer.service_new_duration %}
+            <li class="list-group-item"><b> Güncellenen Süre:</b> {{ offer.service_new_duration }} saat</li>
+        {% endif %}
         <li class="list-group-item"><b>Şehir:</b> {{ offer.service_city }}</li>
         <li class="list-group-item"><b>İlçe:</b> {{ offer.service_district }}</li>
     </ul>
     <br>
-    {% if offer.status == 4 %}
+    {% if offer.is_service_provider_finalized == True and offer.is_service_taker_finalized == False %}
         <a class="btn btn-primary btn-lg" href="{% url "request_finalize" offer.id %}" role="button">Onayla</a>
     {% endif %}
 

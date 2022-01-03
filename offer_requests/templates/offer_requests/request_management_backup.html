@@ -23,22 +23,18 @@
                 <th scope="row">{{ forloop.counter }}</th>
                 <td><a href="{% url "offer_detail" request.related_offer_id %}">{{ request.related_offer }}</a></td>
 
-                {% if request.id != request.related_offer.accepted_request_id %}
-                    {% if request.related_offer.is_service_taker_finalized == True %}
-                        <td>Teklif kapandı.</td>
-                    {% else %}
-                        <td>Talebiniz iletildi.</td>
-                    {% endif %}
-                {% else %}
-                    {% if request.related_offer.is_request_accepted == True and request.related_offer.is_service_provider_finalized == False %}
-                        <td>Talebiniz onaylandı, tarihi unutmayın!</td>
-                    {% elif request.related_offer.is_service_provider_finalized == True and request.related_offer.is_service_taker_finalized == False %}
-                        <td>Servisi aldınız, onayınız bekleniyor.</td>
-                    {% elif request.related_offer.is_service_taker_finalized == True %}
-                        <td>Teklif kapandı.</td>
-                    {% endif %}
-                {% endif %}
+                {% if request.status == 1 %}
+                    <td>{{ my_status.1 }}</td>
+                {% elif request.status == 2 %}
+                    <td>{{ my_status.2 }}</td>
+                {% elif request.status == 3 %}
+                    <td>{{ my_status.3 }}</td>
+                {% elif request.status == 4 %}
+                    <td><a href="{% url "offer_detail" request.related_offer_id %}">{{ my_status.4 }}</a></td>
+                {% elif request.status == 5 %}
+                    <td>{{ my_status.5 }}</td>
 
+                {% endif %}
 
                 <td>
                     <a href="{% url 'gen_profile' request.related_offer.offer_creator.id %}">{{ request.related_offer.offer_creator.username }}</a>

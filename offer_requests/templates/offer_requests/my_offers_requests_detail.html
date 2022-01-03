@@ -3,25 +3,27 @@
 {% block content %}
     <br>
     <h4>İlgilenen:</h4>
-    <p>{{ user.username }} adlı kullanıcı</p>
+    <p>{{ profile.user.username }} adlı kullanıcı</p>
 
     <ul class="list-group">
-        <li class="list-group-item"><b>Oluşturan:</b> {{ user.first_name }} {{ user.last_name }}</li>
-        <li class="list-group-item"><b>Mail:</b> {{ user.email }} </li>
+        <li class="list-group-item"><b>Oluşturan:</b> {{ profile.user.first_name }} {{ profile.user.last_name }}</li>
+        <li class="list-group-item"><b>Mail:</b> {{ profile.user.email }} </li>
         <li class="list-group-item"><b>Bio:</b> {{ profile.bio }} </li>
         <li class="list-group-item"><b>Toplam Servis Saati:</b> {{ profile.tot_hours_of_service }} </li>
         <li class="list-group-item"><b>Puanı:</b> {{ profile.average_rating }} </li>
         <li class="list-group-item"><b>Zaman Kredisi:</b> {{ profile.credits }} </li>
     </ul>
     <br>
-    <div class="form-group">
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-success btn-sm">Onayla</button>
-            <a class="btn btn-secondary btn-sm" href="../" role="button">İptal</a>
-        </form>
-    </div>
+    {% if offer.is_request_accepted == False %}
+        <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success btn-sm">Onayla</button>
+                <a class="btn btn-secondary btn-sm" href="../" role="button">İptal</a>
+            </form>
+        </div>
+    {% endif %}
 
 {% endblock content %}
 

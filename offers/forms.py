@@ -9,8 +9,9 @@ from offer_requests.models import OfferRequests
 class ServiceOfferForm(ModelForm):
     class Meta:
         model = ServiceOffer
-        fields = "__all__"
-        exclude = {"offer_creator", "request_count", "status", "service_rating", 'service_comment'}
+        fields = ["service_title", "service_category", "service_subcategory", "service_name", "service_description",
+                  "service_date", "service_start_time", "service_duration", "service_spot", "service_city",
+                  "service_district"]
         widgets = {
             "service_date": DateInput(attrs={"type": "date"}),
             "service_start_time": TimeInput(attrs={"type": "time"}),
@@ -27,8 +28,9 @@ class ServiceOfferForm(ModelForm):
 class ServiceOfferEditForm(ModelForm):
     class Meta:
         model = ServiceOffer
-        fields = "__all__"
-        exclude = {"offer_creator", "timestamp"}
+        fields = ["service_title", "service_category", "service_subcategory", "service_name", "service_description",
+                  "service_date", "service_start_time", "service_duration", "service_spot", "service_city",
+                  "service_district"]
         widgets = {
             "service_date": DateInput(attrs={"type": "date"}),
             "service_start_time": TimeInput(attrs={"type": "time"}),
@@ -45,7 +47,7 @@ class ServiceOfferEditForm(ModelForm):
 class OfferRequestForm(ModelForm):
     class Meta:
         model = OfferRequests
-        fields = ('message',)
+        fields = ['message']
         labels = {
             "message": "Mesaj"
         }
@@ -58,7 +60,10 @@ class OfferRequestForm(ModelForm):
 class ServiceOfferFinalForm(ModelForm):
     class Meta:
         model = ServiceOffer
-        fields = ('service_duration',)
+        fields = ['service_new_duration']
+        labels = {
+            'service_new_duration': "Güncelleyin"
+        }
         widgets = {
-            "service_duration": TextInput(attrs={"type": "number", "min": "1", "max": "3"})
+            'service_new_duration': TextInput(attrs={"type": "number", "min": "1", "max": "3"})
         }

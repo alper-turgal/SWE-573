@@ -25,16 +25,16 @@
                 <!--2. column -->
                 <td><a href="{% url "my_offers_detail" offer.id %}">{{ offer }}</a></td>
                 <!--3. column -->
-                {% if offer.status == 1 %}
-                    <td>Teklifiniz bekliyor</td>
-                {% elif offer.status == 2 %}
-                    <td>Teklifinize talep var</td>
-                {% elif offer.status == 3 %}
-                    <td>Talebi onayladınız</td>
-                {% elif offer.status == 4 %}
-                    <td>Servisi Verdiniz</td>
-                {% elif offer.status == 5 %}
-                    <td>Tamamlandı</td>
+                {% if offer.is_requested == False %}
+                    <td>Teklifinize henüz talep yok.</td>
+                {% elif offer.is_requested == True and  offer.is_request_accepted == False %}
+                    <td>Onay bekleyen talepleriniz var.</td>
+                {% elif offer.is_request_accepted == True and offer.is_service_provider_finalized == False %}
+                    <td>Onayladığınız bir talep var, tarihi unutmayın!</td>
+                {% elif offer.is_service_provider_finalized == True and offer.is_service_taker_finalized == False %}
+                    <td>Servisi verdiniz, karşı tarafın onayı bekleniyor.</td>
+                {% elif offer.is_service_taker_finalized == True %}
+                    <td>Teklif kapandı.</td>
                 {% endif %}
                 <!--4. column: -->
                 {% if offer.request_count == 0 %}
@@ -43,9 +43,9 @@
                     <td><a href="{% url "request_list" offer.id %}">{{ offer.request_count }} Üye</a></td>
                 {% endif %}
                 <!--5. column: Onayladıklarım -->
-                {% if offer.status > 2 %}
+                {% if offer.is_request_accepted == True %}
                     {% for request in offer.requests.all %}
-                        {% if request.status > 2 %}
+                        {% if request.id == offer.accepted_request_id %}
                             <td>
                                 <a href="{% url 'gen_profile' request.request_creator.id %}">{{ request.request_creator.username }}</a>
                             </td>

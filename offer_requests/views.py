@@ -23,19 +23,33 @@ def list_my_offers_requests(request, id):
 @login_required
 def accept_my_offers_requests(request, id):
     request_obj = get_object_or_404(OfferRequests, id=id)
-    offer_status = 3  # confirmed request
-    user = get_object_or_404(User, id=request_obj.request_creator_id)
+    # offer_status = 3  # confirmed request
+    # user = get_object_or_404(User, id=request_obj.request_creator_id)
     profile = get_object_or_404(Profile, user_id=request_obj.request_creator_id)
     offer = get_object_or_404(ServiceOffer, id=request_obj.related_offer_id)
+    credit_refund = offer.service_duration
+    # requests_received = OfferRequests.objects.all().filter(related_offer_id=offer.id)
+    requests_received = offer.requests.all()
     if request.method == "POST":
         form = OfferRequestAnswerForm(request.POST, instance=request_obj)
         if form.is_valid():
-            if offer.status == 2:
-                offer.status = offer_status  # accepted demand
-                offer.save(update_fields=['status'])
-                response_form = form.save(commit=False)
-                response_form.status = offer_status
-                response_form.save()
+            if offer.is_request_accepted != True:
+                # offer.status = offer_status  # accepted demand
+                offer.is_request_accepted = True
+                offer.accepted_request_id = request_obj.id
+                offer.save(update_fields=["is_request_accepted", "accepted_request_id"])
+                # offer.save(update_fields=['status', "is_request_accepted"])
+                # response_form = form.save(commit=False)
+                # response_form.status = offer_status
+                # response_form.save()
+                for any_request in requests_received:
+                    requesters_profile = get_object_or_404(Profile, user_id=any_request.request_creator_id)
+                    if requesters_profile.user_id != request_obj.request_creator_id:
+                        requesters_profile.credits = requesters_profile.credits + credit_refund
+                        requesters_profile.save(update_fields=["credits"])
+                # profile.credits = profile.credits - credit_refund
+                # profile.save(update_fields=["credits"])
+                form.save()
                 return redirect("my_offers_list")
             else:
                 messages.error(request, "Bu teklif için kabul ettiğiniz bir talep var!")
@@ -43,16 +57,17 @@ def accept_my_offers_requests(request, id):
     else:
         form = OfferRequestAnswerForm()
     return render(request, "offer_requests/my_offers_requests_detail.html",
-                  {"user": user, "profile": profile, "form": form})
+                  {"offer": offer, "profile": profile, "form": form})
 
 
 def list_my_requests(request):
-    my_requests = OfferRequests.objects.all().filter(request_creator=request.user.id)
-    request_status_wording = ["Boş", "Talep yok.", "Talebiniz bekliyor.", "Talebiniz kabul edildi.",
-                              "Servis sunuldu, onayınız bekleniyor.",
-                              "Tamamlandı"]
+    my_requests = OfferRequests.objects.all().filter(request_creator=request.user)
+    # request_status_wording = ["Boş", "Talep yok.", "Talebiniz bekliyor.", "Talebiniz kabul edildi.",
+    # "Servis sunuldu, onayınız bekleniyor.","Tamamlandı"]
+    # return render(request, "offer_requests/request_management.html",
+    #              {"requests": my_requests, "my_status": request_status_wording})
     return render(request, "offer_requests/request_management.html",
-                  {"requests": my_requests, "my_status": request_status_wording})
+                  {"requests": my_requests})
 
 
 def detail_my_requests(request, id):
@@ -63,16 +78,32 @@ def detail_my_requests(request, id):
 
 def finalize_service_as_taker(request, id):
     offer_obj = get_object_or_404(ServiceOffer, id=id)
-    request_obj = get_object_or_404(OfferRequests, related_offer_id=id)
-    offer_status = 5  # completed
+    # request_obj = get_object_or_404(OfferRequests, related_offer_id=id)
+    # offer_status = 5  # completed
     if request.method == "POST":
         form = FinalizeServiceAsTakerForm(request.POST, instance=offer_obj)
         if form.is_valid():
             response_form = form.save(commit=False)
-            response_form.status = offer_status
+            response_form.is_service_taker_finalized = True
             response_form.save()
-            request_obj.status = offer_status
-            request_obj.save(update_fields=['status'])
+            # response_form.status = offer_status
+            new_offer_obj = get_object_or_404(ServiceOffer, id=id)
+            credit_difference = offer_obj.service_new_duration - offer_obj.service_duration
+            requester_profile = get_object_or_404(Profile, user=request.user)
+            requester_profile.credits -= credit_difference
+            requester_profile.save(update_fields=['credits'])
+            provider_profile = get_object_or_404(Profile, user=offer_obj.offer_creator)
+            provider_profile.credits += (credit_difference + offer_obj.service_duration)
+            provider_profile.tot_hours_of_service += (credit_difference + offer_obj.service_duration)
+            marginal_rating = new_offer_obj.service_rating * (
+                    credit_difference + offer_obj.service_duration)
+            existing_rating = provider_profile.average_rating * provider_profile.tot_hours_of_service
+            provider_profile.average_rating = (marginal_rating + existing_rating) / (
+                    provider_profile.tot_hours_of_service + (credit_difference + offer_obj.service_duration))
+            provider_profile.save(update_fields=['credits', "tot_hours_of_service", "average_rating"])
+
+            # request_obj.status = offer_status
+            # request_obj.save(update_fields=['status'])
             return redirect("req_man")
     else:
         form = FinalizeServiceAsTakerForm()

@@ -10,7 +10,7 @@ class Profile(models.Model):
 
     bio = models.TextField()
     credits = models.IntegerField(default=5)
-    tot_hours_of_service = models.IntegerField(default=10)
+    tot_hours_of_service = models.IntegerField(default=5)
     average_rating = models.IntegerField(default=5)
 
     def __str__(self):

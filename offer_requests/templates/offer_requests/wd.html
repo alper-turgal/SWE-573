@@ -1,0 +1,24 @@
+{% if request.related_offer.is_requested == False %}
+    <td>Bu talep henüz yaratılmadı.</td>
+{% elif request.related_offer.is_requested == True and  request.related_offer.is_request_accepted == False %}
+    <td>Talebiniz henüz onaylanmadı.</td>
+{% elif request.related_offer.is_request_accepted == True and request.related_offer.is_service_provider_finalized == False %}
+    <td>Talebiniz onaylandı, tarihi unutmayın!</td>
+{% elif request.related_offer.is_service_provider_finalized == True and request.related_offer.is_service_taker_finalized == False %}
+    <td>Servisi aldınız, onayınız bekleniyor.</td>
+{% elif request.related_offer.is_service_taker_finalized == True %}
+    <td>Teklif kapandı.</td>
+{% endif %}
+
+
+{% if request.related_offer.is_requested == False %}
+    <td>Bu talep henüz yaratılmadı.</td>
+{% elif request.related_offer.is_requested == True and  request.related_offer.is_request_accepted == False %}
+    <td>Talebiniz iletildi.</td>
+{% elif request.related_offer.is_request_accepted == True and request.related_offer.is_service_provider_finalized == False %}
+    <td>Talebiniz onaylandı, tarihi unutmayın!</td>
+{% elif request.related_offer.is_service_provider_finalized == True and request.related_offer.is_service_taker_finalized == False %}
+    <td>Servisi aldınız, onayınız bekleniyor.</td>
+{% elif request.related_offer.is_service_taker_finalized == True %}
+    <td>Teklif kapandı.</td>
+{% endif %}
