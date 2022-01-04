@@ -97,8 +97,22 @@ def edit_services_offer_form(request, id):
 @login_required
 def delete_offer(request, id):
     offer = get_object_or_404(ServiceOffer, id=id)
+    received_requests = OfferRequests.objects.filter(related_offer_id=id)
+    credit_refund = offer.service_duration
     if request.method == "POST":
-        offer.delete()
+        offer.is_service_cancelled = True
+        for received_request in received_requests:
+            requester_profile = get_object_or_404(Profile, user_id=received_request.request_creator_id)
+            if received_request.is_cancelled == False:
+                if offer.is_request_accepted == True:
+                    if offer.accepted_request_id == received_request.request_creator_id:
+                        requester_profile.credits += credit_refund
+                else:
+                    requester_profile.credits += credit_refund
+            requester_profile.save(update_fields=["credits"])
+            received_request.is_offer_cancelled = True
+            received_request.save(update_fields=["is_offer_cancelled"])
+        offer.save(update_fields=["is_service_cancelled"])
         return redirect("users-home")
     context = {"offer": offer}
     return render(request, "offers/offer_delete.html", context)

@@ -14,10 +14,11 @@ from offers.models import ServiceOffer
 
 @login_required
 def list_my_offers_requests(request, id):
+    offer = get_object_or_404(ServiceOffer, id=id)
     requests_query = OfferRequests.objects.all().filter(related_offer_id=id)
 
     return render(request, "offer_requests/my_offers_requests_list.html",
-                  {"requests": requests_query})
+                  {"requests": requests_query, "offer": offer})
 
 
 @login_required

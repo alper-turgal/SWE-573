@@ -27,6 +27,7 @@ class ServiceOffer(models.Model):
     accepted_request_id = models.IntegerField(default=0)
     is_service_provider_finalized = models.BooleanField(default=False)
     is_service_taker_finalized = models.BooleanField(default=False)
+    is_service_cancelled = models.BooleanField(default=False)
     request_count = models.IntegerField(default=0)
     service_rating = models.IntegerField(default=5)
     service_comment = models.CharField(default="Yorum yazabilirsiniz..", max_length=200, verbose_name="Yorumunuz")

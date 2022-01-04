@@ -6,7 +6,7 @@
     <ul>
 
         {% for offer in offers_list %}
-            {% if offer.offer_creator_id != in_user.id %}
+            {% if offer.offer_creator_id != in_user.id and offer.is_service_cancelled == False %}
                 <li>
                     <a href="{% url "all_offers_detail" offer.id %}">{{ offer }}</a>
                 </li>

@@ -1,7 +1,8 @@
 {% extends "users/base.html" %}
 {% block title %} Register Page {% endblock title %}
 {% block content %}
-    <h3>Kimler İlgilenmiş:</h3>
+    <h5>{{ offer }} Teklifinizle Kimler İlgilenmiş:</h5>
+
 
     <ul>
         {% for request in requests %}

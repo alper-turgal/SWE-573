@@ -1,7 +1,7 @@
 {% extends "users/base.html" %}
 {% block title %} Tekliflerim {% endblock title %}
 {% block content %}
-    <h3>Teklif Detayı</h3>
+    <h3>Teklifinizin Detayı</h3>
 
 
 
@@ -30,14 +30,17 @@
     </ul>
     <br>
 
-    {% if offer.is_service_provider_finalized == False %}
-        <a class="btn btn-primary btn-lg" href="{% url "offers_form_edit" offer.id %}" role="button">Değişiklik
-            Yap</a>
-        <a class="btn btn-secondary btn-lg" href="{% url "request_list" offer.id %}" role="button">Talepleri Gör</a>
-        {% if offer.is_request_accepted == True %}
-            <a class="btn btn-secondary btn-lg" href="{% url "offer_finalize" offer.id %}" role="button">Tamamlandı</a>
+    {% if offer.is_service_cancelled == False %}
+        {% if offer.is_service_provider_finalized == False %}
+            <a class="btn btn-primary btn-lg" href="{% url "offers_form_edit" offer.id %}" role="button">Değişiklik
+                Yap</a>
+            <a class="btn btn-secondary btn-lg" href="{% url "request_list" offer.id %}" role="button">Talepleri Gör</a>
+            {% if offer.is_request_accepted == True %}
+                <a class="btn btn-secondary btn-lg" href="{% url "offer_finalize" offer.id %}"
+                   role="button">Tamamlandı</a>
+            {% endif %}
+            <a class="btn btn-danger btn-lg" href="{% url "offers_form_delete" offer.id %}" role="button">Sil</a>
         {% endif %}
-        <a class="btn btn-danger btn-lg" href="{% url "offers_form_delete" offer.id %}" role="button">Sil</a>
     {% endif %}
 
 

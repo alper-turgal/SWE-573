@@ -21,30 +21,38 @@
         {% for request in requests %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
-                <td><a href="{% url "offer_detail" request.related_offer_id %}">{{ request.related_offer }}</a></td>
 
-                {% if request.is_cancelled == True %}
-                    <td>Talebinizi iptal ettiniz.</td>
+                {% if request.related_offer.is_service_cancelled == True %}
+                    <td>{{ request.related_offer }}</td>
                 {% else %}
-                    {% if request.id != request.related_offer.accepted_request_id %}
-                        {% if request.related_offer.is_service_taker_finalized == True %}
-                            <td>Teklif kapandı.</td>
-                        {% else %}
-                            <td>Talebiniz iletildi.</td>
-                        {% endif %}
-                    {% else %}
-                        {% if request.related_offer.is_request_accepted == True and request.related_offer.is_service_provider_finalized == False %}
-                            <td>Talebiniz onaylandı, tarihi unutmayın!</td>
-                        {% elif request.related_offer.is_service_provider_finalized == True and request.related_offer.is_service_taker_finalized == False %}
-                            <td>Servisi aldınız, onayınız bekleniyor.</td>
-                        {% elif request.related_offer.is_service_taker_finalized == True %}
-                            <td>Teklif kapandı.</td>
-                        {% endif %}
-                    {% endif %}
+                    <td><a href="{% url "offer_detail" request.related_offer_id %}">{{ request.related_offer }}</a></td>
                 {% endif %}
 
-
-
+                {% if request.related_offer.is_service_cancelled == True %}
+                    <td>Bu teklif iptal edildi.</td>
+                {% else %}
+                    <!-- -->
+                    {% if request.is_cancelled == True %}
+                        <td>Talebinizi iptal ettiniz.</td>
+                    {% else %}
+                        {% if request.id != request.related_offer.accepted_request_id %}
+                            {% if request.related_offer.is_service_taker_finalized == True %}
+                                <td>Teklif kapandı.</td>
+                            {% else %}
+                                <td>Talebiniz iletildi.</td>
+                            {% endif %}
+                        {% else %}
+                            {% if request.related_offer.is_request_accepted == True and request.related_offer.is_service_provider_finalized == False %}
+                                <td>Talebiniz onaylandı, tarihi unutmayın!</td>
+                            {% elif request.related_offer.is_service_provider_finalized == True and request.related_offer.is_service_taker_finalized == False %}
+                                <td>Servisi aldınız, onayınız bekleniyor.</td>
+                            {% elif request.related_offer.is_service_taker_finalized == True %}
+                                <td>Teklif kapandı.</td>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                    <!-- -->
+                {% endif %}
                 <td>
                     <a href="{% url 'gen_profile' request.related_offer.offer_creator.id %}">{{ request.related_offer.offer_creator.username }}</a>
                 </td>

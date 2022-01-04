@@ -11,4 +11,5 @@ class OfferRequests(models.Model):
     message = models.TextField(default="Teklifinizle ilgileniyorum, teşekkürler..")
     response_message = models.TextField(default="Kabul ettiğiniz için teşekkürler, görüşmek üzere..")
     is_cancelled = models.BooleanField(default=False)
+    is_offer_cancelled = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
