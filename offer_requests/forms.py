@@ -9,7 +9,7 @@ class OfferRequestAnswerForm(ModelForm):
         model = OfferRequests
         fields = ('response_message',)
         labels = {
-            "response_message": "Mesaj"
+            "response_message": "Mesajınız"
         }
         widgets = {
             "response_message": forms.Textarea(

@@ -57,7 +57,7 @@ def accept_my_offers_requests(request, id):
     else:
         form = OfferRequestAnswerForm()
     return render(request, "offer_requests/my_offers_requests_detail.html",
-                  {"offer": offer, "profile": profile, "form": form})
+                  {"offer": offer, "profile": profile, "form": form, "coming_request": request_obj})
 
 
 def list_my_requests(request):

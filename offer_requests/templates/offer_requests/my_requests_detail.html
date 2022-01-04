@@ -23,6 +23,14 @@
         <li class="list-group-item"><b>İlçe:</b> {{ offer.service_district }}</li>
     </ul>
     <br>
+    <h6>Teklif Sahibinin Mesajı:</h6>
+    <ul class="list-group">
+        <li class="list-group-item">{{ my_request.response_message }}</li>
+    </ul>
+
+
+    <br>
+
     {% if offer.is_service_provider_finalized == True and offer.is_service_taker_finalized == False %}
         <a class="btn btn-primary btn-lg" href="{% url "request_finalize" offer.id %}" role="button">Onayla</a>
     {% endif %}

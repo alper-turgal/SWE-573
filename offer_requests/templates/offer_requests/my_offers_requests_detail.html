@@ -3,7 +3,7 @@
 {% block content %}
     <br>
     <h4>İlgilenen:</h4>
-    <p>{{ profile.user.username }} adlı kullanıcı</p>
+    <p><b>{{ profile.user.username }}</b> adlı kullanıcı</p>
 
     <ul class="list-group">
         <li class="list-group-item"><b>Oluşturan:</b> {{ profile.user.first_name }} {{ profile.user.last_name }}</li>
@@ -12,7 +12,9 @@
         <li class="list-group-item"><b>Toplam Servis Saati:</b> {{ profile.tot_hours_of_service }} </li>
         <li class="list-group-item"><b>Puanı:</b> {{ profile.average_rating }} </li>
         <li class="list-group-item"><b>Zaman Kredisi:</b> {{ profile.credits }} </li>
+        <li class="list-group-item"><b>Mesajı:</b> {{ coming_request.message }} </li>
     </ul>
+    <br>
     <br>
     {% if offer.is_request_accepted == False %}
         <div class="form-group">
