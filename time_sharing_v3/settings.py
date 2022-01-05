@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'time_sharing_v3.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'db_v1',
-        'USER': 'alperturgal',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
         'HOST': 'db',
         'PORT': '5432',
     }
