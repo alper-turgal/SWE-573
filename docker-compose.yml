@@ -18,7 +18,7 @@ services:
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_NAME=db_v1
+      - POSTGRES_DB=db_v1
       - POSTGRES_USER=test
       - POSTGRES_PASSWORD=password
       - POSTGRES_HOST_AUTH_METHOD=trust
