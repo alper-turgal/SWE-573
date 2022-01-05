@@ -13,8 +13,8 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
+      - POSTGRES_NAME=db_v1
+      - POSTGRES_USER=alperturgal
       - POSTGRES_PASSWORD=postgres
 
 
