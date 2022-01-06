@@ -4,11 +4,11 @@ services:
   web:
     container_name: swe573
     build: .
-    command: python manage.py makemigrations && python manage.py makemigrations && python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
-      - "10555:8000"
+      - "8000:8000"
 
     depends_on:
       - db
