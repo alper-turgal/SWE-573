@@ -24,6 +24,7 @@ from users.views import ChangePasswordView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
+    path('', include('services.urls')),
     path('offers', include('offers.urls')),
     path('requests', include('offer_requests.urls')),
     path('login/', CustomLoginView.as_view(redirect_authenticated_user=True, template_name='users/login.html',

@@ -1,0 +1,37 @@
+{% extends "users/base.html" %}
+{% block title %} Teklifler {% endblock title %}
+{% block content %}
+    <h5>Search for a service according to:</h5>
+
+    <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+            Service Categories
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
+            {% for category in categories %}
+                <a class="dropdown-item"
+                   href="{% url "service_search_cat" category.id %}">{{ category.service_category }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <br>
+    <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+            Cities
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
+            {% for city in cities %}
+                <a class="dropdown-item"
+                   href="{% url "service_search_city" city %}">{{ city }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}

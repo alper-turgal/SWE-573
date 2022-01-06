@@ -1,0 +1,30 @@
+{% extends "users/base.html" %}
+{% block title %} Teklifler {% endblock title %}
+{% block content %}
+    <br>
+    <h6>Services in {{ city }}:</h6>
+
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+
+            <th scope="col">Available Offers</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for offer in offers %}
+            <tr>
+            {% if offer.offer_creator_id != user.id and offer.is_service_cancelled == False %}
+                <td><a href="{% url "all_offers_detail" offer.id %}">{{ offer }}</a></td>
+            {% endif %}
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+
+
+{% endblock content %}
+
+
