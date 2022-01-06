@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'services',
     'offer_requests',
     'django_bootstrap_icons',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [
