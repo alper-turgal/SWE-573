@@ -1,29 +1,29 @@
 {% extends "users/base.html" %}
-{% block title %} Tekliflerim {% endblock title %}
+{% block title %} Offer Detail {% endblock title %}
 {% block content %}
-    <h3>Teklif Detayı</h3>
+    <h3>Service Details:</h3>
 
 
 
     <ul class="list-group">
         <li class="list-group-item">
-            <b>Oluşturan:</b> {{ offer.offer_creator.first_name }} {{ offer.offer_creator.last_name }}</li>
-        <li class="list-group-item"><b>Başlık:</b> {{ offer.service_title }}</li>
-        <li class="list-group-item"><b>Kategori:</b> {{ offer.service_category }}</li>
-        <li class="list-group-item"><b>Alt Kategori:</b> {{ offer.service_subcategory }}</li>
-        <li class="list-group-item"><b>İsim:</b> {{ offer.service_name }}</li>
-        <li class="list-group-item"><b>Tanım:</b> {{ offer.service_description }}</li>
-        <li class="list-group-item"><b>Tarih:</b> {{ offer.service_date }}</li>
-        <li class="list-group-item"><b>Süre:</b> {{ offer.service_duration }} saat</li>
+            <b>Service Provider:</b> {{ offer.offer_creator.first_name }} {{ offer.offer_creator.last_name }}</li>
+        <li class="list-group-item"><b>Title:</b> {{ offer.service_title }}</li>
+        <li class="list-group-item"><b>Category:</b> {{ offer.service_category }}</li>
+        <li class="list-group-item"><b>Subcategory:</b> {{ offer.service_subcategory }}</li>
+        <li class="list-group-item"><b>Service Name:</b> {{ offer.service_name }}</li>
+        <li class="list-group-item"><b>Description:</b> {{ offer.service_description }}</li>
+        <li class="list-group-item"><b>Date:</b> {{ offer.service_date }}</li>
+        <li class="list-group-item"><b>Duration:</b> {{ offer.service_duration }} saat</li>
         {% if offer.service_new_duration != offer.service_duration %}
-            <li class="list-group-item"><b> Güncellenen Süre:</b> {{ offer.service_new_duration }} saat</li>
+            <li class="list-group-item"><b> Updated Duration:</b> {{ offer.service_new_duration }} saat</li>
         {% endif %}
-        <li class="list-group-item"><b>Yer:</b> {{ offer.service_spot }}</li>
-        <li class="list-group-item"><b>Şehir:</b> {{ offer.service_city }}</li>
-        <li class="list-group-item"><b>İlçe:</b> {{ offer.service_district }}</li>
+        <li class="list-group-item"><b>Location:</b> {{ offer.service_spot }}</li>
+        <li class="list-group-item"><b>City:</b> {{ offer.service_city }}</li>
+        <li class="list-group-item"><b>District:</b> {{ offer.service_district }}</li>
     </ul>
     <br>
-    <h6>Teklif Sahibinin Mesajı:</h6>
+    <h6><b>Service Provider's Message:</b></h6>
     <ul class="list-group">
         <li class="list-group-item">{{ my_request.response_message }}</li>
     </ul>
@@ -32,11 +32,11 @@
     <br>
 
     {% if offer.is_service_provider_finalized == True and offer.is_service_taker_finalized == False %}
-        <a class="btn btn-primary btn-lg" href="{% url "request_finalize" offer.id %}" role="button">Onayla</a>
+        <a class="btn btn-primary btn-lg" href="{% url "request_finalize" offer.id %}" role="button">Finalize</a>
     {% endif %}
 
     {% if  offer.is_service_provider_finalized != True and my_request.is_cancelled != True %}
-        <a class="btn btn-primary btn-lg" href="{% url "req_del" offer.id %}" role="button">İptal Et</a>
+        <a class="btn btn-primary btn-lg" href="{% url "req_del" offer.id %}" role="button">Cancel</a>
     {% endif %}
 
 

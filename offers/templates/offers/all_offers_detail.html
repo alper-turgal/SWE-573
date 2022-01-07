@@ -1,9 +1,9 @@
 {% extends "users/base.html" %}
 {% block title %} Tekliflerim {% endblock title %}
 {% block content %}
-    <h3>Teklif Detayı</h3>
+    <h3>Offer Detail</h3>
     {% if check %}
-        <h5>Bu teklife daha önce talep göndermiştiniz!</h5>
+        <h5>You have already sent a request to this offer!</h5>
     {% endif %}
 
 
@@ -11,19 +11,20 @@
     <ul class="list-group">
         <li class="list-group-item">
             <b>Oluşturan:</b> {{ offer.offer_creator.first_name }} {{ offer.offer_creator.last_name }}</li>
-        <li class="list-group-item"><b>Başlık:</b> {{ offer.service_title }}</li>
-        <li class="list-group-item"><b>Kategori:</b> {{ offer.service_category }}</li>
-        <li class="list-group-item"><b>Alt Kategori:</b> {{ offer.service_subcategory }}</li>
-        <li class="list-group-item"><b>İsim:</b> {{ offer.service_name }}</li>
-        <li class="list-group-item"><b>Tanım:</b> {{ offer.service_description }}</li>
-        <li class="list-group-item"><b>Tarih:</b> {{ offer.service_date }}</li>
-        <li class="list-group-item"><b>Süre:</b> {{ offer.service_duration }} saat</li>
-        <li class="list-group-item"><b>Şehir:</b> {{ offer.service_city }}</li>
-        <li class="list-group-item"><b>İlçe:</b> {{ offer.service_district }}</li>
+        <li class="list-group-item"><b>Title:</b> {{ offer.service_title }}</li>
+        <li class="list-group-item"><b>Category:</b> {{ offer.service_category }}</li>
+        <li class="list-group-item"><b>Subcategory:</b> {{ offer.service_subcategory }}</li>
+        <li class="list-group-item"><b>Service Name:</b> {{ offer.service_name }}</li>
+        <li class="list-group-item"><b>Description:</b> {{ offer.service_description }}</li>
+        <li class="list-group-item"><b>Date:</b> {{ offer.service_date }}</li>
+        <li class="list-group-item"><b>Duration:</b> {{ offer.service_duration }} hours</li>
+        <li class="list-group-item"><b>Location:</b> {{ offer.service_spot }} </li>
+        <li class="list-group-item"><b>City:</b> {{ offer.service_city }}</li>
+        <li class="list-group-item"><b>District:</b> {{ offer.service_district }}</li>
     </ul>
     <br>
     {% if not check %}
-        <a class="btn btn-primary btn-lg" href="{% url "offer_request" offer.id %}" role="button">Talep Gönder</a>
+        <a class="btn btn-primary btn-lg" href="{% url "offer_request" offer.id %}" role="button">Send Request</a>
     {% endif %}
 
 

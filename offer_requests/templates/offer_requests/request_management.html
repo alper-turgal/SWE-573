@@ -1,9 +1,9 @@
 {% extends "users/base.html" %}
-{% block title %} Register Page {% endblock title %}
+{% block title %} Request Management {% endblock title %}
 
 {% block content %}
     <br>
-    <h4>Talep Yönetimi</h4>
+    <h4>Request Management</h4>
 
 
 
@@ -11,10 +11,10 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Taleplerim</th>
-            <th scope="col">Talep Durumu</th>
-            <th scope="col">Teklif Sahibi</th>
-            <th scope="col">Oluşturma Tarihi</th>
+            <th scope="col">My Requests</th>
+            <th scope="col">Request Status</th>
+            <th scope="col">Offer Owner</th>
+            <th scope="col">Request Creation Date</th>
         </tr>
         </thead>
         <tbody>
@@ -29,25 +29,25 @@
                 {% endif %}
 
                 {% if request.related_offer.is_service_cancelled == True %}
-                    <td>Bu teklif iptal edildi.</td>
+                    <td>This offer has been cancelled!</td>
                 {% else %}
                     <!-- -->
                     {% if request.is_cancelled == True %}
-                        <td>Talebinizi iptal ettiniz.</td>
+                        <td>You have cancelled your request.</td>
                     {% else %}
                         {% if request.id != request.related_offer.accepted_request_id %}
                             {% if request.related_offer.is_service_taker_finalized == True %}
-                                <td>Teklif kapandı.</td>
+                                <td>Service has been finalized.</td>
                             {% else %}
-                                <td>Talebiniz iletildi.</td>
+                                <td>Your request has been forwarded..</td>
                             {% endif %}
                         {% else %}
                             {% if request.related_offer.is_request_accepted == True and request.related_offer.is_service_provider_finalized == False %}
-                                <td>Talebiniz onaylandı, tarihi unutmayın!</td>
+                                <td>Your request has been accepted, don't forget the date!</td>
                             {% elif request.related_offer.is_service_provider_finalized == True and request.related_offer.is_service_taker_finalized == False %}
-                                <td>Servisi aldınız, onayınız bekleniyor.</td>
+                                <td>You have received the service, please confirm.</td>
                             {% elif request.related_offer.is_service_taker_finalized == True %}
-                                <td>Teklif kapandı.</td>
+                                <td>Service has been finalized.</td>
                             {% endif %}
                         {% endif %}
                     {% endif %}

@@ -1,16 +1,16 @@
 {% extends "users/base.html" %}
-{% block title %} Tekliflerim {% endblock title %}
+{% block title %} My Profile {% endblock title %}
 {% block content %}
     <br>
-    <h4>Üye Detayı</h4>
+    <h4>Your Profile</h4>
     <ul class="list-group">
-        <li class="list-group-item"><b>İsim:</b> {{ my_profile.user.first_name }} {{ my_profile.user.last_name }}</li>
+        <li class="list-group-item"><b>Name:</b> {{ my_profile.user.first_name }} {{ my_profile.user.last_name }}</li>
         <li class="list-group-item"><b>Username:</b> {{ my_profile.user.username }}</li>
         <li class="list-group-item"><b>Mail:</b> {{ my_profile.user.email }} </li>
         <li class="list-group-item"><b>Bio:</b> {{ my_profile.bio }} </li>
-        <li class="list-group-item"><b>Toplam Servis Saati:</b> {{ my_profile.tot_hours_of_service }} </li>
-        <li class="list-group-item"><b>Puanı:</b> {{ my_profile.average_rating }} </li>
-        <li class="list-group-item"><b>Zaman Kredisi:</b> {{ my_profile.credits }} </li>
+        <li class="list-group-item"><b>Total Hours of Service:</b> {{ my_profile.tot_hours_of_service }} hours</li>
+        <li class="list-group-item"><b>Average Rating:</b> {{ my_profile.average_rating }} </li>
+        <li class="list-group-item"><b>Time Credits:</b> {{ my_profile.credits }} hours</li>
     </ul>
     <br>
     <a class="btn btn-secondary btn-lg" href="{% url 'users-profile' %}" role="button">Update Profile</a>

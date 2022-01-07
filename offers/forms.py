@@ -62,7 +62,7 @@ class ServiceOfferFinalForm(ModelForm):
         model = ServiceOffer
         fields = ['service_new_duration']
         labels = {
-            'service_new_duration': "Güncelleyin"
+            'service_new_duration': "Do you need to update duration:"
         }
         widgets = {
             'service_new_duration': TextInput(attrs={"type": "number", "min": "1", "max": "3"})

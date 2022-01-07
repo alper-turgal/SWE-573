@@ -1,5 +1,5 @@
 {% extends "users/base.html" %}
-{% block title %} Tekliflerim {% endblock title %}
+{% block title %} Finalize {% endblock title %}
 {% block content %}
 
     <div class="form-group">
@@ -7,8 +7,8 @@
             {% csrf_token %}
             {{ form.as_p }}
             <br>
-            <button type="submit" class="btn btn-success btn-sm">Onayla</button>
-            <a class="btn btn-secondary btn-sm" href="../" role="button">İptal</a>
+            <button type="submit" class="btn btn-success btn-sm">Finalize</button>
+            <a class="btn btn-secondary btn-sm" href="../" role="button">Cancel</a>
         </form>
     </div>
 

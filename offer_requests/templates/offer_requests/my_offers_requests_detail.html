@@ -2,17 +2,17 @@
 {% block title %} Tekliflerim {% endblock title %}
 {% block content %}
     <br>
-    <h4>İlgilenen:</h4>
-    <p><b>{{ profile.user.username }}</b> adlı kullanıcı</p>
+    <h4>Requested: <b>{{ profile.user.username }}</b></h4>
 
     <ul class="list-group">
-        <li class="list-group-item"><b>Oluşturan:</b> {{ profile.user.first_name }} {{ profile.user.last_name }}</li>
+        <li class="list-group-item"><b>Request Owner:</b> {{ profile.user.first_name }} {{ profile.user.last_name }}
+        </li>
         <li class="list-group-item"><b>Mail:</b> {{ profile.user.email }} </li>
         <li class="list-group-item"><b>Bio:</b> {{ profile.bio }} </li>
-        <li class="list-group-item"><b>Toplam Servis Saati:</b> {{ profile.tot_hours_of_service }} </li>
-        <li class="list-group-item"><b>Puanı:</b> {{ profile.average_rating }} </li>
-        <li class="list-group-item"><b>Zaman Kredisi:</b> {{ profile.credits }} </li>
-        <li class="list-group-item"><b>Mesajı:</b> {{ coming_request.message }} </li>
+        <li class="list-group-item"><b>Total Hours of Service:</b> {{ profile.tot_hours_of_service }} </li>
+        <li class="list-group-item"><b>Average Rating:</b> {{ profile.average_rating }} </li>
+        <li class="list-group-item"><b>Time Credits:</b> {{ profile.credits }} </li>
+        <li class="list-group-item"><b>Her/His Message: </b> {{ coming_request.message }} </li>
     </ul>
     <br>
     <br>
@@ -21,8 +21,8 @@
             <form method="POST">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="btn btn-success btn-sm">Onayla</button>
-                <a class="btn btn-secondary btn-sm" href="../" role="button">İptal</a>
+                <button type="submit" class="btn btn-success btn-sm">Accept</button>
+                <a class="btn btn-secondary btn-sm" href="../" role="button">Cancel</a>
             </form>
         </div>
     {% endif %}

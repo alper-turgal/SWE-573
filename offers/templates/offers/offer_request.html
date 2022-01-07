@@ -2,19 +2,19 @@
 {% block title %} Tekliflerim {% endblock title %}
 {% block content %}
     <br>
-    <h4>Teklifi Kabul Et</h4>
+    <h4>Send Request</h4>
 
 
 
     <ul class="list-group">
         {% for person in creator %}
-            <li class="list-group-item"><b>Oluşturan:</b> {{ person.first_name }} {{ person.last_name }}</li>
+            <li class="list-group-item"><b>Creator:</b> {{ person.first_name }} {{ person.last_name }}</li>
             <li class="list-group-item"><b>Mail:</b> {{ person.email }} </li>
             {% for person in profile %}
                 <li class="list-group-item"><b>Bio:</b> {{ person.bio }} </li>
-                <li class="list-group-item"><b>Toplam Servis Saati:</b> {{ person.tot_hours_of_service }} </li>
-                <li class="list-group-item"><b>Puanı:</b> {{ person.average_rating }} </li>
-                <li class="list-group-item"><b>Zaman Kredisi:</b> {{ person.credits }} </li>
+                <li class="list-group-item"><b>Total Hours of Service:</b> {{ person.tot_hours_of_service }} </li>
+                <li class="list-group-item"><b>Average Rating:</b> {{ person.average_rating }} </li>
+                <li class="list-group-item"><b>Time Credits:</b> {{ person.credits }} </li>
             {% endfor %}
         {% endfor %}
     </ul>
@@ -26,8 +26,8 @@
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-success btn-sm">Gönder</button>
-            <a class="btn btn-secondary btn-sm" href="../" role="button">İptal</a>
+            <button type="submit" class="btn btn-success btn-sm">Submit</button>
+            <a class="btn btn-secondary btn-sm" href="../" role="button">Cancel</a>
         </form>
     </div>
 

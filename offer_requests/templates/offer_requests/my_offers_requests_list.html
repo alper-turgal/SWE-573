@@ -1,12 +1,13 @@
 {% extends "users/base.html" %}
-{% block title %} Register Page {% endblock title %}
+{% block title %} Requesters {% endblock title %}
 {% block content %}
-    <h5>{{ offer }} Teklifinizle Kimler İlgilenmiş:</h5>
+    <h5>Who are interested in your offer: {{ offer }} </h5>
 
 
-    <ul>
+    <ul class="list-group">
+
         {% for request in requests %}
-            <li>
+            <li class="list-group-item">
                 {% if request.is_cancelled == False %}
                     <a href="{% url "request_detail" request.id %}">{{ request.request_creator.username }}</a>
                 {% endif %}
@@ -18,3 +19,4 @@
 
 
 {% endblock content %}
+

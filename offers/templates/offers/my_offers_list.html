@@ -1,9 +1,9 @@
 {% extends "users/base.html" %}
-{% block title %} Register Page {% endblock title %}
+{% block title %} My Offers {% endblock title %}
 
 {% block content %}
     <br>
-    <h4>Teklif Yönetimi</h4>
+    <h4>Service Offer Management</h4>
 
 
 
@@ -11,10 +11,10 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Tekliflerim</th>
-            <th scope="col">Teklif Durumu</th>
-            <th scope="col">İlgilenenler</th>
-            <th scope="col">Onayladıklarım</th>
+            <th scope="col">My Offers</th>
+            <th scope="col">Offer Status</th>
+            <th scope="col">Who Requested</th>
+            <th scope="col">Accepted</th>
         </tr>
         </thead>
         <tbody>
@@ -30,22 +30,22 @@
                     <td>Teklifininizi iptal ettiniz.</td>
                 {% else %}
                     {% if offer.is_requested == False %}
-                        <td>Teklifinize henüz talep yok.</td>
+                        <td>No requests for your offer yet!</td>
                     {% elif offer.is_requested == True and  offer.is_request_accepted == False %}
-                        <td>Onayınızı bekleyen talepler var.</td>
+                        <td>You have pending requests.</td>
                     {% elif offer.is_request_accepted == True and offer.is_service_provider_finalized == False %}
-                        <td>Onayladığınız bir talep var, tarihi unutmayın!</td>
+                        <td>There's a request you accepted, don't forget the date!</td>
                     {% elif offer.is_service_provider_finalized == True and offer.is_service_taker_finalized == False %}
-                        <td>Servisi verdiniz, karşı tarafın onayı bekleniyor.</td>
+                        <td>You have delivered the service, waiting for counterparty confirmation.</td>
                     {% elif offer.is_service_taker_finalized == True %}
-                        <td>Teklif kapandı.</td>
+                        <td>The offer has been completed.</td>
                     {% endif %}
                 {% endif %}
                 <!--4. column: -->
                 {% if offer.request_count == 0 %}
-                    <td> Henüz ilgilenen yok!</td>
+                    <td> Waiting!</td>
                 {% else %}
-                    <td><a href="{% url "request_list" offer.id %}">{{ offer.request_count }} Üye</a></td>
+                    <td><a href="{% url "request_list" offer.id %}">{{ offer.request_count }} Members</a></td>
                 {% endif %}
                 <!--5. column: Onayladıklarım -->
                 {% if offer.is_request_accepted == True %}
@@ -64,9 +64,5 @@
 
         </tbody>
     </table>
-
-
-
-
 
 {% endblock content %}

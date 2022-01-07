@@ -17,7 +17,7 @@ class ServiceOffer(models.Model):
     service_start_time = models.TimeField(default=time(9), verbose_name="Starting")
     service_duration = models.IntegerField(verbose_name="Duration (Hours)")
     service_new_duration = models.IntegerField(verbose_name="Duration (Hours)", default=0)
-    service_spot = models.CharField(max_length=200, verbose_name="Lokasyon", default="Maçka Parkı")
+    service_spot = models.CharField(max_length=200, verbose_name="Location")
     service_city = models.CharField(max_length=200, verbose_name="Your City")
     service_district = models.CharField(max_length=200, verbose_name="Your District")
     timestamp = models.DateTimeField(auto_now_add=True)

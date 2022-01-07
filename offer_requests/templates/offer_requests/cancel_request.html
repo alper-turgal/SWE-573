@@ -3,9 +3,9 @@
 {% block content %}
     <form method="POST">
         {% csrf_token %}
-        <h3>Talebinizi iptal etmek istiyor musunuz?</h3>
-        <button type="submit" class="btn btn-danger btn-sm">Evet</button>
-        <a class="btn btn-primary btn-sm" href="../" role="button">İptal</a>
+        <h3>Do you want to cancel your request?</h3>
+        <button type="submit" class="btn btn-danger btn-sm">Yes</button>
+        <a class="btn btn-primary btn-sm" href="../" role="button">Cancel</a>
     </form>
 
 {% endblock content %}

@@ -2,15 +2,15 @@
 {% block title %} Tekliflerim {% endblock title %}
 {% block content %}
     <br>
-    <h4>Aldığınız servis için onay verin:</h4>
+    <h4>Please confirm the service you have received:</h4>
 
     <br>
     <div class="form-group">
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-success btn-sm">Onayla</button>
-            <a class="btn btn-secondary btn-sm" href="../" role="button">İptal</a>
+            <button type="submit" class="btn btn-success btn-sm">Confirm</button>
+            <a class="btn btn-secondary btn-sm" href="../" role="button">Cancel</a>
         </form>
     </div>
 
