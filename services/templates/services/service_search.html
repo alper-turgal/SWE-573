@@ -1,37 +1,45 @@
 {% extends "users/base.html" %}
 {% block title %} Teklifler {% endblock title %}
 {% block content %}
-    <h5>Search for a service according to:</h5>
+    <div class="jumbotron">
+        <h6 class="display-4">Find the services you need!</h6>
+        <p class="lead">There are many services available in various categories offered by our members.</p>
+        <hr class="my-4">
 
-    <div class="btn-group">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">
-            Service Categories
-        </a>
+        <p class="lead">Search according to:</p>
 
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <p class="lead">
+        <div class="btn-group">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+               data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                Service Categories
+            </a>
 
-            {% for category in categories %}
-                <a class="dropdown-item"
-                   href="{% url "service_search_cat" category.id %}">{{ category.service_category }}</a>
-            {% endfor %}
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
+                {% for category in categories %}
+                    <a class="dropdown-item"
+                       href="{% url "service_search_cat" category.id %}">{{ category.service_category }}</a>
+                {% endfor %}
+            </div>
         </div>
-    </div>
+        <div class="btn-group">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+               data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                Cities
+            </a>
 
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 
-    <div class="btn-group">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">
-            Cities
-        </a>
-
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-
-            {% for city in cities %}
-                <a class="dropdown-item"
-                   href="{% url "service_search_city" city %}">{{ city }}</a>
-            {% endfor %}
+                {% for city in cities %}
+                    <a class="dropdown-item"
+                       href="{% url "service_search_city" city %}">{{ city }}</a>
+                {% endfor %}
+            </div>
         </div>
+        </p>
     </div>
 
 {% endblock content %}

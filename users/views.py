@@ -102,3 +102,8 @@ def profile(request):
 def show_profile(request, id):
     gen_user = get_object_or_404(Profile, user_id=id)
     return render(request, 'users/gen_profile.html', {'gen_user': gen_user})
+
+
+def show_my_profile(request):
+    my_profile = get_object_or_404(Profile, user_id=request.user.id)
+    return render(request, 'users/my_profile.html', {'my_profile': my_profile})
