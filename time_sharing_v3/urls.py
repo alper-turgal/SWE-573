@@ -20,6 +20,7 @@ from users.views import CustomLoginView
 from users.forms import LoginForm
 from users.views import ResetPasswordView
 from users.views import ChangePasswordView
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,3 +34,4 @@ urlpatterns = [
     path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
     path('password-change/', ChangePasswordView.as_view(), name='password_change'),
 ]
+urlpatterns += staticfiles_urlpatterns()
