@@ -3,10 +3,9 @@
 {% block content %}
     <form method="POST">
         {% csrf_token %}
-        <h3>Do you want to cancel your offer?</h3>
+        <h3>Do you want to delete your profile?</h3>
         <button type="submit" class="btn btn-danger btn-sm">Yes</button>
         <a class="btn btn-primary btn-sm" href="../" role="button">Cancel</a>
     </form>
 
 {% endblock content %}
-

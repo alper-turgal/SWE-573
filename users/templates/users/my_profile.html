@@ -13,5 +13,6 @@
         <li class="list-group-item"><b>Time Credits:</b> {{ my_profile.credits }} hours</li>
     </ul>
     <br>
-    <a class="btn btn-secondary btn-lg" href="{% url 'users-profile' %}" role="button">Update Profile</a>
+    <a class="btn btn-secondary btn-sm" href="{% url 'users-profile' %}" role="button">Update Profile</a>
+    <a class="btn btn-danger btn-sm" href="{% url 'delete_my_profile' %}" role="button">Delete Profile</a>
 {% endblock content %}

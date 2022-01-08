@@ -7,6 +7,9 @@ from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from users.models import Profile
+from offers.models import ServiceOffer
+from offer_requests.models import OfferRequests
+from django.contrib import messages
 
 from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
 
@@ -107,3 +110,25 @@ def show_profile(request, id):
 def show_my_profile(request):
     my_profile = get_object_or_404(Profile, user_id=request.user.id)
     return render(request, 'users/my_profile.html', {'my_profile': my_profile})
+
+
+def delete_my_profile(request):
+    my_profile = get_object_or_404(Profile, user_id=request.user.id)
+    user = request.user
+    my_offers = ServiceOffer.objects.all().filter(offer_creator=request.user.id)
+    my_requests = OfferRequests.objects.all().filter(request_creator=request.user.id)
+    # is_existing = bool(my_offers) or bool(my_requests)
+    is_offer_cancelled = False
+    is_request_cancelled = False
+    for my_offer in my_offers:
+        is_offer_cancelled = bool(my_offer.is_service_cancelled)
+    for my_request in my_requests:
+        is_request_cancelled = bool(my_request.is_cancelled)
+    if request.method == "POST":
+        if is_request_cancelled == False or is_offer_cancelled == False:
+            messages.error(request, "You have uncancelled offers or requests. First, you should cancel them.")
+            return redirect('my_profile')
+        my_profile.delete()
+        user.delete()
+        return redirect("users-home")
+    return render(request, 'users/delete_profile.html')

@@ -53,7 +53,7 @@ def accept_my_offers_requests(request, id):
                 form.save()
                 return redirect("my_offers_list")
             else:
-                messages.error(request, "Bu teklif için kabul ettiğiniz bir talep var!")
+                messages.error(request, "You have already accepted a request for this offer")
                 return redirect("my_offers_list")
     else:
         form = OfferRequestAnswerForm()
