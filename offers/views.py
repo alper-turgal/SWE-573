@@ -101,18 +101,21 @@ def delete_offer(request, id):
     credit_refund = offer.service_duration
     if request.method == "POST":
         offer.is_service_cancelled = True
+        offer.save(update_fields=["is_service_cancelled"])
         for received_request in received_requests:
-            requester_profile = get_object_or_404(Profile, user_id=received_request.request_creator_id)
-            if received_request.is_cancelled == False:
-                if offer.is_request_accepted == True:
-                    if offer.accepted_request_id == received_request.request_creator_id:
-                        requester_profile.credits += credit_refund
-                else:
-                    requester_profile.credits += credit_refund
-            requester_profile.save(update_fields=["credits"])
             received_request.is_offer_cancelled = True
             received_request.save(update_fields=["is_offer_cancelled"])
-        offer.save(update_fields=["is_service_cancelled"])
+            if received_request.is_cancelled == False:
+                if offer.is_request_accepted != True:
+                    requester = get_object_or_404(Profile, user_id=received_request.request_creator_id)
+                    requester.credits += credit_refund
+                    requester.save(update_fields=["credits"])
+                else:
+                    accepted_request = get_object_or_404(OfferRequests, related_offer_id=offer.id)
+                    requester = get_object_or_404(Profile, user_id=accepted_request.request_creator_id)
+                    requester.credits += credit_refund
+                    requester.save(update_fields=["credits"])
+        # end of for loop
         return redirect("users-home")
     context = {"offer": offer}
     return render(request, "offers/offer_delete.html", context)
