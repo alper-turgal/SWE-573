@@ -22,7 +22,7 @@ class FinalizeServiceAsTakerForm(ModelForm):
         model = ServiceOffer
         fields = ('service_rating', 'service_comment')
         labels = {
-            "service_comment": "Yorum"
+            "service_comment": "Your Comment"
         }
 
         widgets = {

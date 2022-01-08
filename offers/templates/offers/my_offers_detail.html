@@ -20,11 +20,11 @@
         {% if offer.is_service_taker_finalized == True %}
             {% for request in offer.requests.all %}
                 {% if request.id == offer.accepted_request_id %}
-                    <li class="list-group-item"><b>Hizmeti Alan:</b> {{ request.request_creator.username }}</li>
+                    <li class="list-group-item"><b>Service Taker:</b> {{ request.request_creator.username }}</li>
                 {% endif %}
             {% endfor %}
-            <li class="list-group-item"><b>Değerlendirme Puanı:</b> {{ offer.service_rating }}</li>
-            <li class="list-group-item"><b>Yorum:</b> {{ offer.service_comment }}</li>
+            <li class="list-group-item"><b>Rating For The Service:</b> {{ offer.service_rating }}</li>
+            <li class="list-group-item"><b>Comment:</b> {{ offer.service_comment }}</li>
         {% endif %}
 
     </ul>

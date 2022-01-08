@@ -39,3 +39,8 @@ def list_according_to_city_category(request, city):
     user = request.user
     return render(request, "services/acc_to_city.html",
                   {"offers": offers, "user": user, "city": city})
+
+
+def list_all_services(request):
+    offers = ServiceOffer.objects.all()
+    return render(request, "services/acc_to_all.html", {"offers": offers})

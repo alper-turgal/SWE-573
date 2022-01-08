@@ -8,5 +8,6 @@ urlpatterns = [
     path("search", views.search_for_service, name="service_search"),
     path("search/cat/<int:id>", views.list_according_to_service_category, name="service_search_cat"),
     path("search/cat/<str:city>", views.list_according_to_city_category, name="service_search_city"),
+    path("search/all", views.list_all_services, name="service_search_all"),
 
 ]
