@@ -27,7 +27,7 @@
                 <!--3. column -->
 
                 {% if offer.is_service_cancelled == True %}
-                    <td>Teklifininizi iptal ettiniz.</td>
+                    <td>You have cancelled your offer.</td>
                 {% else %}
                     {% if offer.is_requested == False %}
                         <td>No requests for your offer yet!</td>
@@ -42,13 +42,20 @@
                     {% endif %}
                 {% endif %}
                 <!--4. column: -->
-                {% if offer.request_count == 0 %}
-                    <td> Waiting!</td>
+                {% if offer.is_service_cancelled == True %}
+                    <td>-</td>
                 {% else %}
-                    <td><a href="{% url "request_list" offer.id %}">{{ offer.request_count }} Members</a></td>
+                    {% if offer.request_count == 0 %}
+                        <td> Waiting!</td>
+                    {% else %}
+                        <td><a href="{% url "request_list" offer.id %}">{{ offer.request_count }} Members</a></td>
+                    {% endif %}
                 {% endif %}
+
+
+
                 <!--5. column: Onayladıklarım -->
-                {% if offer.is_request_accepted == True %}
+                {% if offer.is_request_accepted == True and offer.is_service_cancelled == False %}
                     {% for request in offer.requests.all %}
                         {% if request.id == offer.accepted_request_id %}
                             <td>
@@ -59,6 +66,8 @@
                 {% else %}
                     <td>-</td>
                 {% endif %}
+
+
             </tr>
         {% endfor %}
 
