@@ -34,4 +34,3 @@ urlpatterns = [
     path('password-reset/', ResetPasswordView.as_view(), name='password_reset'),
     path('password-change/', ChangePasswordView.as_view(), name='password_change'),
 ]
-urlpatterns += staticfiles_urlpatterns()
