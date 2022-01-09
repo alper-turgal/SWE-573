@@ -121,9 +121,11 @@ def cancel_my_request(request, id):
     all_requests = OfferRequests.objects.all().filter(related_offer_id=id)
     if request.method == "POST":
         my_profile.credits += requested_offer.service_duration
-        if requested_offer.request_count == 1:
-            requested_offer.is_requested = False
         requested_offer.request_count -= 1
+        if requested_offer.request_count == 0:
+            requested_offer.is_requested = False
+        requested_offer.save(
+            update_fields=["request_count", "is_requested"])
         if my_request.id == requested_offer.accepted_request_id:
             for other_request in all_requests:
                 profile = get_object_or_404(Profile, user_id=other_request.request_creator_id)
@@ -133,13 +135,18 @@ def cancel_my_request(request, id):
                         profile.save(update_fields=["credits"])
                     else:
                         other_request.is_cancelled = True
+                        requested_offer.request_count -= 1
+                        if requested_offer.request_count == 0:
+                            requested_offer.is_requested = False
                         other_request.save(update_fields=["is_cancelled"])
+                        requested_offer.save(
+                            update_fields=["request_count", "is_requested"])
             requested_offer.accepted_request_id = 0
             requested_offer.is_request_accepted = False
         my_request.is_cancelled = True
         my_profile.save(update_fields=["credits"])
         requested_offer.save(
-            update_fields=["request_count", "is_requested", "accepted_request_id", "is_request_accepted"])
+            update_fields=["accepted_request_id", "is_request_accepted"])
         my_request.save(update_fields=["is_cancelled"])
         return redirect("req_man")
     return render(request, "offer_requests/cancel_request.html")
