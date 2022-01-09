@@ -12,9 +12,11 @@
             <li class="list-group-item"><b>Mail:</b> {{ person.email }} </li>
             {% for person in profile %}
                 <li class="list-group-item"><b>Bio:</b> {{ person.bio }} </li>
-                <li class="list-group-item"><b>Total Hours of Service:</b> {{ person.tot_hours_of_service }} </li>
+                <li class="list-group-item"><b>Total Hours of Service Rendered:</b> {{ person.tot_hours_of_service }}
+                    hours
+                </li>
                 <li class="list-group-item"><b>Average Rating:</b> {{ person.average_rating }} </li>
-                <li class="list-group-item"><b>Time Credits:</b> {{ person.credits }} </li>
+                <li class="list-group-item"><b>Time Credits:</b> {{ person.credits }} hours</li>
             {% endfor %}
         {% endfor %}
     </ul>

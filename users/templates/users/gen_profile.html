@@ -8,8 +8,9 @@
         <li class="list-group-item"><b>Name:</b> {{ gen_user.user.first_name }} {{ gen_user.user.last_name }}</li>
         <li class="list-group-item"><b>Mail:</b> {{ gen_user.user.email }} </li>
         <li class="list-group-item"><b>Bio:</b> {{ gen_user.bio }} </li>
-        <li class="list-group-item"><b>Total Hours of Service:</b> {{ gen_user.tot_hours_of_service }} </li>
+        <li class="list-group-item"><b>Total Hours of Service Rendered:</b> {{ gen_user.tot_hours_of_service }} hours
+        </li>
         <li class="list-group-item"><b>Average Rating:</b> {{ gen_user.average_rating }} </li>
-        <li class="list-group-item"><b>Time Credits:</b> {{ gen_user.credits }} </li>
+        <li class="list-group-item"><b>Time Credits:</b> {{ gen_user.credits }} hours</li>
     </ul>
 {% endblock content %}
