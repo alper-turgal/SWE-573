@@ -2,26 +2,25 @@ version: "3.9"
 
 services:
   web:
-    container_name: swe573
+    container_name: swe573-time_sharing
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    restart: always
+    env_file: ./time_sharing_v3/.env
     volumes:
-      - .:/code
+      - .:/SWE573_Project
+      - static_volume:/SWE573_Project/static
     ports:
-      - "8000:8000"
-    environment:
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - "80:8000"
     depends_on:
       - db
+
   db:
-    image: postgres
-    container_name: swe573db
+    container_name: time_sharing_db
+    env_file: ./time_sharing_v3/.env
     volumes:
       - ./data/db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=db_v1
-      - POSTGRES_USER=test
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - 5433:5432
+
+volumes:
+  static_volume:

@@ -12,11 +12,14 @@ Django==4.0
 django-bootstrap-icons==0.7.4
 django-bootstrap-v5==1.0.7
 django-crispy-forms==1.13.0
+django-environ==0.8.1
 django-heroku==0.3.1
 docker==5.0.3
 docker-compose==1.29.2
 dockerpty==0.4.1
 docopt==0.6.2
+env==0.1.0
+environ==1.0
 gunicorn==20.1.0
 idna==3.3
 jsonschema==3.2.0
