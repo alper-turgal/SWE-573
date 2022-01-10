@@ -16,6 +16,7 @@ services:
 
   db:
     container_name: time_sharing_db
+    image: postgres
     env_file: ./time_sharing_v3/.env
     volumes:
       - ./data/db:/var/lib/postgresql/data
