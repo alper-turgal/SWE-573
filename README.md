@@ -12,8 +12,7 @@ Installation Instructions:
 - Activate the virtual environment: RUN $ source bin/activate
 - Install docker and git
 - $ git init
-- $ git clone 
-
+- $ git clone https://github.com/alper-turgal/SWE-573.git
 - $ docker-compose up –build (The containers are up and running).
 - Go to http://localhost:80 in your development environment to use the app.
 
