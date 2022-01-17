@@ -14,6 +14,8 @@ Installation Instructions:
 - Install docker and git
 - $ git init
 - $ git clone https://github.com/alper-turgal/SWE-573.git
-- $ docker-compose up –build (The containers are up and running).
+- Create an environmet file in the time_sharing_V3 directory named .env
+- Copy the the content of .env file in this repo into the .env file you created in your local repo
+- $ docker-compose up  (The containers are up and running).
 - Go to http://localhost:80 in your development environment to use the app.
 
