@@ -9,6 +9,7 @@ hour of sharing skills or helping others earns one time credit, whatever the ski
 Installation Instructions:
 
 - Create a virtual environment in your directory: RUN $ python3 -m venv env
+- Go to the env directory: RUN $ cd env
 - Activate the virtual environment: RUN $ source bin/activate
 - Install docker and git
 - $ git init
